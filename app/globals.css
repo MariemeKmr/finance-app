@@ -1,8 +1,13 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --font-display: "Cormorant Garamond", serif;
+  --font-body: "DM Sans", sans-serif;
+  --color-teal: #069494;
+  --color-rose: #C48A9F;
+  --color-gold: #D4AF37;
+  --color-dark: #0A1110;
+  --color-cream: #FDFBF7;
 }
 
 @theme inline {
@@ -24,3 +29,4 @@ body {
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
 }
+
