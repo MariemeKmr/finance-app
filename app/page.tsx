@@ -1,65 +1,255 @@
-import Image from "next/image";
+"use client";
+import { useRouter } from "next/navigation";
 
 export default function Home() {
+  const router = useRouter();
+
   return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
+    <>
+      <style>{`
+        @import url("https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600&family=DM+Sans:wght@300;400;500&display=swap");
+        
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        
+        .landing { background: #0A1110; min-height: 100vh; font-family: "DM Sans", sans-serif; color: #FDFBF7; overflow-x: hidden; }
+        
+        .bg-grid { background-image: repeating-linear-gradient(0deg, transparent, transparent 39px, rgba(6,148,148,0.05) 40px), repeating-linear-gradient(90deg, transparent, transparent 39px, rgba(6,148,148,0.05) 40px); }
+        
+        .nav { display: flex; align-items: center; justify-content: space-between; padding: 20px 60px; border-bottom: 0.5px solid rgba(253,251,247,0.06); position: sticky; top: 0; background: rgba(10,17,16,0.95); backdrop-filter: blur(12px); z-index: 100; }
+        
+        .nav-logo { font-family: "Cormorant Garamond", serif; font-size: 22px; font-weight: 300; letter-spacing: 0.18em; color: #FDFBF7; text-transform: uppercase; }
+        
+        .nav-btns { display: flex; gap: 12px; }
+        
+        .btn-outline { background: none; border: 0.5px solid rgba(253,251,247,0.2); border-radius: 6px; color: rgba(253,251,247,0.7); font-family: "DM Sans", sans-serif; font-size: 12px; letter-spacing: 0.12em; text-transform: uppercase; padding: 8px 20px; cursor: pointer; transition: all 0.2s; }
+        .btn-outline:hover { border-color: #069494; color: #069494; }
+        
+        .btn-filled { background: #069494; border: none; border-radius: 6px; color: #FDFBF7; font-family: "DM Sans", sans-serif; font-size: 12px; letter-spacing: 0.12em; text-transform: uppercase; padding: 8px 20px; cursor: pointer; transition: all 0.2s; }
+        .btn-filled:hover { background: #057a7a; }
+
+        .hero { display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 100px 24px 80px; position: relative; }
+        
+        .hero-badge { display: inline-flex; align-items: center; gap: 8px; background: rgba(6,148,148,0.1); border: 0.5px solid rgba(6,148,148,0.3); border-radius: 100px; padding: 6px 16px; margin-bottom: 32px; }
+        .hero-badge-dot { width: 6px; height: 6px; background: #069494; border-radius: 50%; }
+        .hero-badge-text { font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; color: #069494; }
+        
+        .hero-title { font-family: "Cormorant Garamond", serif; font-size: 64px; font-weight: 300; line-height: 1.1; letter-spacing: 0.04em; color: #FDFBF7; max-width: 700px; margin-bottom: 24px; }
+        .hero-title span { color: #D4AF37; }
+        
+        .hero-sub { font-size: 16px; color: rgba(253,251,247,0.5); line-height: 1.7; max-width: 480px; margin-bottom: 40px; font-weight: 300; }
+        
+        .hero-btns { display: flex; gap: 16px; flex-wrap: wrap; justify-content: center; }
+        
+        .btn-gold { background: #D4AF37; border: none; border-radius: 6px; color: #0A1110; font-family: "DM Sans", sans-serif; font-size: 13px; font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase; padding: 14px 32px; cursor: pointer; transition: all 0.2s; }
+        .btn-gold:hover { background: #c49d2e; transform: translateY(-1px); }
+        
+        .btn-ghost { background: none; border: 0.5px solid rgba(253,251,247,0.15); border-radius: 6px; color: rgba(253,251,247,0.6); font-family: "DM Sans", sans-serif; font-size: 13px; letter-spacing: 0.12em; text-transform: uppercase; padding: 14px 32px; cursor: pointer; transition: all 0.2s; }
+        .btn-ghost:hover { border-color: rgba(253,251,247,0.4); color: #FDFBF7; }
+
+        .divider-gold { display: flex; align-items: center; gap: 16px; margin: 0 auto 80px; max-width: 300px; }
+        .divider-line { flex: 1; height: 0.5px; background: rgba(253,251,247,0.1); }
+        .divider-diamond { width: 6px; height: 6px; background: #D4AF37; transform: rotate(45deg); flex-shrink: 0; }
+
+        .features { padding: 0 60px 100px; max-width: 1100px; margin: 0 auto; }
+        .features-label { text-align: center; font-size: 10px; letter-spacing: 0.22em; text-transform: uppercase; color: #069494; margin-bottom: 16px; }
+        .features-title { text-align: center; font-family: "Cormorant Garamond", serif; font-size: 40px; font-weight: 300; color: #FDFBF7; letter-spacing: 0.06em; margin-bottom: 60px; }
+        
+        .features-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; }
+        
+        .feature-card { background: rgba(253,251,247,0.02); border: 0.5px solid rgba(253,251,247,0.08); border-radius: 12px; padding: 28px; transition: all 0.3s; cursor: default; }
+        .feature-card:hover { background: rgba(253,251,247,0.04); border-color: rgba(6,148,148,0.3); transform: translateY(-2px); }
+        
+        .feature-icon { width: 44px; height: 44px; border-radius: 10px; display: flex; align-items: center; justify-content: center; margin-bottom: 20px; font-size: 20px; }
+        .feature-icon-teal { background: rgba(6,148,148,0.12); border: 0.5px solid rgba(6,148,148,0.2); }
+        .feature-icon-rose { background: rgba(196,138,159,0.12); border: 0.5px solid rgba(196,138,159,0.2); }
+        .feature-icon-gold { background: rgba(212,175,55,0.12); border: 0.5px solid rgba(212,175,55,0.2); }
+        
+        .feature-title { font-size: 15px; font-weight: 500; color: #FDFBF7; letter-spacing: 0.04em; margin-bottom: 10px; }
+        .feature-desc { font-size: 13px; color: rgba(253,251,247,0.45); line-height: 1.7; font-weight: 300; }
+
+        .steps { padding: 0 60px 100px; max-width: 1100px; margin: 0 auto; }
+        .steps-label { text-align: center; font-size: 10px; letter-spacing: 0.22em; text-transform: uppercase; color: #C48A9F; margin-bottom: 16px; }
+        .steps-title { text-align: center; font-family: "Cormorant Garamond", serif; font-size: 40px; font-weight: 300; color: #FDFBF7; letter-spacing: 0.06em; margin-bottom: 60px; }
+        
+        .steps-list { display: flex; flex-direction: column; gap: 0; max-width: 600px; margin: 0 auto; }
+        
+        .step { display: flex; gap: 24px; padding: 28px 0; border-bottom: 0.5px solid rgba(253,251,247,0.06); }
+        .step:last-child { border-bottom: none; }
+        
+        .step-number { font-family: "Cormorant Garamond", serif; font-size: 40px; font-weight: 300; color: rgba(212,175,55,0.3); line-height: 1; flex-shrink: 0; width: 48px; }
+        .step-content { padding-top: 4px; }
+        .step-title { font-size: 15px; font-weight: 500; color: #FDFBF7; margin-bottom: 8px; letter-spacing: 0.04em; }
+        .step-desc { font-size: 13px; color: rgba(253,251,247,0.45); line-height: 1.7; font-weight: 300; }
+
+        .cta { padding: 80px 60px; text-align: center; border-top: 0.5px solid rgba(253,251,247,0.06); position: relative; }
+        .cta-title { font-family: "Cormorant Garamond", serif; font-size: 48px; font-weight: 300; color: #FDFBF7; letter-spacing: 0.06em; margin-bottom: 16px; }
+        .cta-sub { font-size: 14px; color: rgba(253,251,247,0.4); margin-bottom: 40px; font-weight: 300; }
+        
+        .footer { padding: 24px 60px; border-top: 0.5px solid rgba(253,251,247,0.06); display: flex; align-items: center; justify-content: space-between; }
+        .footer-logo { font-family: "Cormorant Garamond", serif; font-size: 16px; font-weight: 300; letter-spacing: 0.18em; color: rgba(253,251,247,0.3); text-transform: uppercase; }
+        .footer-text { font-size: 11px; color: rgba(253,251,247,0.2); letter-spacing: 0.08em; }
+
+        .glow-teal { position: absolute; width: 500px; height: 500px; background: radial-gradient(circle, rgba(6,148,148,0.08) 0%, transparent 70%); top: -100px; right: -100px; pointer-events: none; border-radius: 50%; }
+        .glow-rose { position: absolute; width: 400px; height: 400px; background: radial-gradient(circle, rgba(196,138,159,0.06) 0%, transparent 70%); bottom: -50px; left: -50px; pointer-events: none; border-radius: 50%; }
+      `}</style>
+
+      <div className="landing bg-grid">
+
+        {/* Navbar */}
+        <nav className="nav">
+          <div style={{display:"flex", alignItems:"center", gap:"10px"}}>
+            <svg width="28" height="28" viewBox="0 0 72 72" fill="none">
+              <rect x="6" y="6" width="60" height="60" rx="6" fill="#111f1e" stroke="#069494" strokeWidth="1.5"/>
+              <circle cx="36" cy="36" r="16" fill="#0d1a18" stroke="#D4AF37" strokeWidth="1"/>
+              <circle cx="36" cy="36" r="8" fill="#0d1a18" stroke="#069494" strokeWidth="0.8"/>
+              <line x1="36" y1="29" x2="36" y2="33" stroke="#D4AF37" strokeWidth="1.5" strokeLinecap="round"/>
+              <circle cx="36" cy="36" r="2" fill="#D4AF37"/>
+              <rect x="52" y="32" width="4" height="8" rx="1" fill="#D4AF37" opacity="0.7"/>
+            </svg>
+            <span className="nav-logo">MyKalpé</span>
+          </div>
+          <div className="nav-btns">
+            <button className="btn-outline" onClick={() => router.push("/login")}>Se connecter</button>
+            <button className="btn-filled" onClick={() => router.push("/register")}>Commencer</button>
+          </div>
+        </nav>
+
+        {/* Hero */}
+        <section className="hero" style={{position:"relative"}}>
+          <div className="glow-teal"/>
+          <div className="glow-rose"/>
+
+          <div className="hero-badge">
+            <div className="hero-badge-dot"/>
+            <span className="hero-badge-text">Coffre-Fort Numérique</span>
+          </div>
+
+          <h1 className="hero-title">
+            Gérez vos finances<br/>avec <span>élégance</span>
           </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
+
+          <p className="hero-sub">
+            MyKalpé est votre espace personnel sécurisé pour suivre vos dépenses, 
+            planifier votre épargne et visualiser votre santé financière en temps réel.
           </p>
+
+          <div className="hero-btns">
+            <button className="btn-gold" onClick={() => router.push("/register")}>
+              Ouvrir mon coffre
+            </button>
+            <button className="btn-ghost" onClick={() => router.push("/login")}>
+              J&apos;ai déjà un compte
+            </button>
+          </div>
+        </section>
+
+        <div className="divider-gold">
+          <div className="divider-line"/>
+          <div className="divider-diamond"/>
+          <div className="divider-line"/>
         </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
-        </div>
-      </main>
-    </div>
+
+        {/* Features */}
+        <section className="features">
+          <p className="features-label">Fonctionnalités</p>
+          <h2 className="features-title">Tout ce dont vous avez besoin</h2>
+
+          <div className="features-grid">
+            <div className="feature-card">
+              <div className="feature-icon feature-icon-teal">📊</div>
+              <p className="feature-title">Dashboard intelligent</p>
+              <p className="feature-desc">Visualisez vos revenus, dépenses et épargnes en un coup d&apos;œil grâce à des graphiques clairs et interactifs.</p>
+            </div>
+
+            <div className="feature-card">
+              <div className="feature-icon feature-icon-rose">💸</div>
+              <p className="feature-title">Suivi des transactions</p>
+              <p className="feature-desc">Enregistrez et catégorisez chaque dépense ou revenu. Filtrez par mois, catégorie ou type pour une vue précise.</p>
+            </div>
+
+            <div className="feature-card">
+              <div className="feature-icon feature-icon-gold">🎯</div>
+              <p className="feature-title">Objectifs d&apos;épargne</p>
+              <p className="feature-desc">Définissez vos objectifs financiers — voyage, projet, fonds d&apos;urgence — et suivez votre progression visuellement.</p>
+            </div>
+
+            <div className="feature-card">
+              <div className="feature-icon feature-icon-teal">🔐</div>
+              <p className="feature-title">Données sécurisées</p>
+              <p className="feature-desc">Vos données financières sont chiffrées et stockées de manière sécurisée. Votre coffre, vos règles.</p>
+            </div>
+
+            <div className="feature-card">
+              <div className="feature-icon feature-icon-rose">📅</div>
+              <p className="feature-title">Historique mensuel</p>
+              <p className="feature-desc">Consultez l&apos;historique complet de vos finances mois par mois et identifiez vos habitudes de dépenses.</p>
+            </div>
+
+            <div className="feature-card">
+              <div className="feature-icon feature-icon-gold">📈</div>
+              <p className="feature-title">Rapports visuels</p>
+              <p className="feature-desc">Des graphiques élégants pour comprendre où va votre argent et prendre de meilleures décisions financières.</p>
+            </div>
+          </div>
+        </section>
+
+        {/* Steps */}
+        <section className="steps">
+          <p className="steps-label">Comment ça marche</p>
+          <h2 className="steps-title">Simple comme bonjour</h2>
+
+          <div className="steps-list">
+            <div className="step">
+              <div className="step-number">01</div>
+              <div className="step-content">
+                <p className="step-title">Créez votre coffre</p>
+                <p className="step-desc">Inscrivez-vous en quelques secondes. Votre espace personnel est créé instantanément et sécurisé avec un mot de passe chiffré.</p>
+              </div>
+            </div>
+
+            <div className="step">
+              <div className="step-number">02</div>
+              <div className="step-content">
+                <p className="step-title">Ajoutez vos transactions</p>
+                <p className="step-desc">Enregistrez vos revenus et dépenses du mois. Catégorisez-les pour avoir une vue claire de vos habitudes financières.</p>
+              </div>
+            </div>
+
+            <div className="step">
+              <div className="step-number">03</div>
+              <div className="step-content">
+                <p className="step-title">Définissez vos objectifs</p>
+                <p className="step-desc">Créez des objectifs d&apos;épargne avec un montant cible et une date limite. Suivez votre progression en temps réel.</p>
+              </div>
+            </div>
+
+            <div className="step">
+              <div className="step-number">04</div>
+              <div className="step-content">
+                <p className="step-title">Analysez et progressez</p>
+                <p className="step-desc">Consultez votre dashboard pour comprendre vos finances et prendre de meilleures décisions chaque mois.</p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* CTA */}
+        <section className="cta" style={{position:"relative"}}>
+          <div className="glow-teal" style={{top:"auto", bottom:"-100px", right:"-100px"}}/>
+          <h2 className="cta-title">Prêt à ouvrir votre coffre ?</h2>
+          <p className="cta-sub">Rejoignez MyKalpé et prenez le contrôle de vos finances dès aujourd&apos;hui.</p>
+          <button className="btn-gold" onClick={() => router.push("/register")}>
+            Créer mon compte gratuitement
+          </button>
+        </section>
+
+        {/* Footer */}
+        <footer className="footer">
+          <span className="footer-logo">MyKalpé</span>
+          <span className="footer-text">© 2025 MyKalpé - Coffre-Fort Numérique - Marième KAMARA </span>
+        </footer>
+
+      </div>
+    </>
   );
 }

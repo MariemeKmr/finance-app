@@ -6,6 +6,10 @@ export async function GET() {
     await connectDB();
     return NextResponse.json({ message: "Connexion MongoDB OK ✅" });
   } catch (error) {
-    return NextResponse.json({ error: String(error) }, { status: 500 });
+    console.error("DB Error:", error);
+    return NextResponse.json({ 
+      error: String(error),
+      details: error instanceof Error ? error.message : "Unknown error"
+    }, { status: 500 });
   }
 }
