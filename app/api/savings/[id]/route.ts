@@ -2,7 +2,34 @@ import { NextResponse } from "next/server";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import connectDB from "@/lib/mongodb";
-import Transaction from "@/models/Transaction";
+import Saving from "@/models/Saving";
+
+export async function PATCH(
+  req: Request,
+  { params }: { params: Promise<{ id: string }> }
+) {
+  try {
+    const { id } = await params;
+    const session = await getServerSession(authOptions);
+    if (!session) return NextResponse.json({ error: "Non autorisé" }, { status: 401 });
+
+    const { currentAmount } = await req.json();
+
+    await connectDB();
+    const saving = await Saving.findOneAndUpdate(
+      { _id: id, userId: session.user.id },
+      { currentAmount: Number(currentAmount) },
+      { returnDocument: "after" }
+    );
+
+    if (!saving)
+      return NextResponse.json({ error: "Objectif introuvable" }, { status: 404 });
+
+    return NextResponse.json(saving);
+  } catch (error) {
+    return NextResponse.json({ error: String(error) }, { status: 500 });
+  }
+}
 
 export async function DELETE(
   req: Request,
@@ -14,42 +41,8 @@ export async function DELETE(
     if (!session) return NextResponse.json({ error: "Non autorisé" }, { status: 401 });
 
     await connectDB();
-    const transaction = await Transaction.findOneAndDelete({
-      _id: id,
-      userId: session.user.id,
-    });
-
-    if (!transaction)
-      return NextResponse.json({ error: "Transaction introuvable" }, { status: 404 });
-
-    return NextResponse.json({ message: "Transaction supprimée" });
-  } catch (error) {
-    return NextResponse.json({ error: String(error) }, { status: 500 });
-  }
-}
-
-export async function PATCH(
-  req: Request,
-  { params }: { params: Promise<{ id: string }> }
-) {
-  try {
-    const { id } = await params;
-    const session = await getServerSession(authOptions);
-    if (!session) return NextResponse.json({ error: "Non autorisé" }, { status: 401 });
-
-    const { type, amount, category, description, date } = await req.json();
-
-    await connectDB();
-    const transaction = await Transaction.findOneAndUpdate(
-      { _id: id, userId: session.user.id },
-      { type, amount: Number(amount), category, description, date: date ? new Date(date) : undefined },
-      { returnDocument: "after" }
-    );
-
-    if (!transaction)
-      return NextResponse.json({ error: "Transaction introuvable" }, { status: 404 });
-
-    return NextResponse.json(transaction);
+    await Saving.findOneAndDelete({ _id: id, userId: session.user.id });
+    return NextResponse.json({ message: "Objectif supprimé" });
   } catch (error) {
     return NextResponse.json({ error: String(error) }, { status: 500 });
   }

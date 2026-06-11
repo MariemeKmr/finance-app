@@ -164,8 +164,7 @@ export default function DashboardPage() {
             ) : (
               <ResponsiveContainer width="100%" height={220}>
                 <BarChart data={barData} barGap={4}>
-                  <CartesianGrid strokeDasharray="3 3" stroke="rgba(253,251,247,0.05)" />
-                  <XAxis dataKey="month" tick={{ fill: "rgba(253,251,247,0.35)", fontSize: 11 }} axisLine={false} tickLine={false} />
+                  <CartesianGrid stroke="rgba(253,251,247,0.05)" strokeDasharray="" />                  <XAxis dataKey="month" tick={{ fill: "rgba(253,251,247,0.35)", fontSize: 11 }} axisLine={false} tickLine={false} />
                   <YAxis tick={{ fill: "rgba(253,251,247,0.35)", fontSize: 11 }} axisLine={false} tickLine={false} />
                   <Tooltip content={<CustomTooltip active={undefined} payload={undefined} />} />
                   <Bar dataKey="revenus" fill="#069494" radius={[4, 4, 0, 0]} />
