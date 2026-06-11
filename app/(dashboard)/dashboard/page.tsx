@@ -14,7 +14,7 @@ export default async function DashboardPage() {
           Tableau de bord
         </p>
         <h1 style={{ fontFamily: "var(--font-display)", fontSize: "32px", fontWeight: 300, color: "#FDFBF7", letterSpacing: "0.06em" }}>
-          Bonjour, {session.user?.name?.split(" ")[0]} 👋
+          Bonjour, {session.user?.name?.split(" ")[0]}
         </h1>
         <div style={{ display: "flex", alignItems: "center", gap: "12px", marginTop: "16px" }}>
           <div style={{ flex: 1, height: "0.5px", background: "rgba(253,251,247,0.08)" }}/>

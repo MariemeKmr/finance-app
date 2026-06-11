@@ -42,6 +42,9 @@ export default function Home() {
         
         .btn-gold { background: #D4AF37; border: none; border-radius: 6px; color: #0A1110; font-family: "DM Sans", sans-serif; font-size: 13px; font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase; padding: 14px 32px; cursor: pointer; transition: all 0.2s; }
         .btn-gold:hover { background: #c49d2e; transform: translateY(-1px); }
+
+        .btn-rose { background: #C48A9F; border: none; border-radius: 6px; color: #0A1110; font-family: "DM Sans", sans-serif; font-size: 13px; font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase; padding: 14px 32px; cursor: pointer; transition: all 0.2s; }
+        .btn-rose:hover { background: #b1798e; transform: translateY(-1px); }
         
         .btn-ghost { background: none; border: 0.5px solid rgba(253,251,247,0.15); border-radius: 6px; color: rgba(253,251,247,0.6); font-family: "DM Sans", sans-serif; font-size: 13px; letter-spacing: 0.12em; text-transform: uppercase; padding: 14px 32px; cursor: pointer; transition: all 0.2s; }
         .btn-ghost:hover { border-color: rgba(253,251,247,0.4); color: #FDFBF7; }
@@ -60,6 +63,7 @@ export default function Home() {
         .feature-card:hover { background: rgba(253,251,247,0.04); border-color: rgba(6,148,148,0.3); transform: translateY(-2px); }
         
         .feature-icon { width: 44px; height: 44px; border-radius: 10px; display: flex; align-items: center; justify-content: center; margin-bottom: 20px; font-size: 20px; }
+        .feature-icon svg { width: 21px; height: 21px; color: #FDFBF7; display: block; }
         .feature-icon-teal { background: rgba(6,148,148,0.12); border: 0.5px solid rgba(6,148,148,0.2); }
         .feature-icon-rose { background: rgba(196,138,159,0.12); border: 0.5px solid rgba(196,138,159,0.2); }
         .feature-icon-gold { background: rgba(212,175,55,0.12); border: 0.5px solid rgba(212,175,55,0.2); }
@@ -156,37 +160,76 @@ export default function Home() {
 
           <div className="features-grid">
             <div className="feature-card">
-              <div className="feature-icon feature-icon-teal">📊</div>
+              <div className="feature-icon feature-icon-teal">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                  <path d="M4 19h16" />
+                  <path d="M7 15v-4" />
+                  <path d="M12 15V7" />
+                  <path d="M17 15v-2" />
+                </svg>
+              </div>
               <p className="feature-title">Dashboard intelligent</p>
               <p className="feature-desc">Visualisez vos revenus, dépenses et épargnes en un coup d&apos;œil grâce à des graphiques clairs et interactifs.</p>
             </div>
 
             <div className="feature-card">
-              <div className="feature-icon feature-icon-rose">💸</div>
+              <div className="feature-icon feature-icon-rose">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                  <path d="M4 7h16a1 1 0 0 1 1 1v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a1 1 0 0 1 1-1Z" />
+                  <path d="M16 12h4" />
+                </svg>
+              </div>
               <p className="feature-title">Suivi des transactions</p>
               <p className="feature-desc">Enregistrez et catégorisez chaque dépense ou revenu. Filtrez par mois, catégorie ou type pour une vue précise.</p>
             </div>
 
             <div className="feature-card">
-              <div className="feature-icon feature-icon-gold">🎯</div>
+              <div className="feature-icon feature-icon-gold">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                  <circle cx="12" cy="12" r="8" />
+                  <circle cx="12" cy="12" r="3" />
+                  <path d="M12 2v3" />
+                  <path d="M12 19v3" />
+                  <path d="M2 12h3" />
+                  <path d="M19 12h3" />
+                </svg>
+              </div>
               <p className="feature-title">Objectifs d&apos;épargne</p>
               <p className="feature-desc">Définissez vos objectifs financiers — voyage, projet, fonds d&apos;urgence — et suivez votre progression visuellement.</p>
             </div>
 
             <div className="feature-card">
-              <div className="feature-icon feature-icon-teal">🔐</div>
+              <div className="feature-icon feature-icon-teal">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                  <path d="M12 3 5 6v6c0 4.2 2.7 7.8 7 9 4.3-1.2 7-4.8 7-9V6l-7-3Z" />
+                  <path d="m9.5 12 1.8 1.8 3.7-4" />
+                </svg>
+              </div>
               <p className="feature-title">Données sécurisées</p>
               <p className="feature-desc">Vos données financières sont chiffrées et stockées de manière sécurisée. Votre coffre, vos règles.</p>
             </div>
 
             <div className="feature-card">
-              <div className="feature-icon feature-icon-rose">📅</div>
+              <div className="feature-icon feature-icon-rose">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                  <rect x="4" y="5" width="16" height="15" rx="2" />
+                  <path d="M8 3v4" />
+                  <path d="M16 3v4" />
+                  <path d="M4 10h16" />
+                </svg>
+              </div>
               <p className="feature-title">Historique mensuel</p>
               <p className="feature-desc">Consultez l&apos;historique complet de vos finances mois par mois et identifiez vos habitudes de dépenses.</p>
             </div>
 
             <div className="feature-card">
-              <div className="feature-icon feature-icon-gold">📈</div>
+              <div className="feature-icon feature-icon-gold">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                  <path d="M4 18h16" />
+                  <path d="M7 14l3-4 3 2 4-6" />
+                  <path d="M17 6h2v2" />
+                </svg>
+              </div>
               <p className="feature-title">Rapports visuels</p>
               <p className="feature-desc">Des graphiques élégants pour comprendre où va votre argent et prendre de meilleures décisions financières.</p>
             </div>
@@ -238,7 +281,7 @@ export default function Home() {
           <div className="glow-teal" style={{top:"auto", bottom:"-100px", right:"-100px"}}/>
           <h2 className="cta-title">Prêt à ouvrir votre coffre ?</h2>
           <p className="cta-sub">Rejoignez MyKalpé et prenez le contrôle de vos finances dès aujourd&apos;hui.</p>
-          <button className="btn-gold" onClick={() => router.push("/register")}>
+          <button className="btn-rose" onClick={() => router.push("/register")}>
             Créer mon compte gratuitement
           </button>
         </section>
