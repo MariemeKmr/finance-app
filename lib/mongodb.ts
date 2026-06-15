@@ -6,7 +6,10 @@ if (!MONGODB_URI) {
   throw new Error("Veuillez définir MONGODB_URI dans .env.local");
 }
 
-let cached = global.mongoose;
+let cached = global.mongoose as {
+  conn: typeof mongoose | null;
+  promise: Promise<typeof mongoose> | null;
+};
 
 if (!cached) {
   cached = global.mongoose = { conn: null, promise: null };
@@ -16,10 +19,21 @@ async function connectDB() {
   if (cached.conn) return cached.conn;
 
   if (!cached.promise) {
-    cached.promise = mongoose.connect(MONGODB_URI).then((mongoose) => mongoose);
+    cached.promise = mongoose.connect(MONGODB_URI!, {
+      serverSelectionTimeoutMS: 5000,
+      socketTimeoutMS: 10000,
+      connectTimeoutMS: 5000,
+      maxPoolSize: 10,
+    }).then((m) => m);
   }
 
-  cached.conn = await cached.promise;
+  try {
+    cached.conn = await cached.promise;
+  } catch (error) {
+    cached.promise = null;
+    throw error;
+  }
+
   return cached.conn;
 }
 
