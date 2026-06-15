@@ -12,8 +12,8 @@ export async function GET() {
     await connectDB();
     const savings = await Saving.find({ userId: session.user.id }).sort({ createdAt: -1 });
     return NextResponse.json(savings);
-  } catch (error) {
-    return NextResponse.json({ error: String(error) }, { status: 500 });
+  } catch {
+    return NextResponse.json({ error: "Erreur serveur" }, { status: 500 });
   }
 }
 
@@ -27,18 +27,32 @@ export async function POST(req: Request) {
     if (!title || !targetAmount)
       return NextResponse.json({ error: "Champs requis manquants" }, { status: 400 });
 
+    if (title.length > 100)
+      return NextResponse.json({ error: "Titre trop long" }, { status: 400 });
+
+    const numTarget = Number(targetAmount);
+    if (isNaN(numTarget) || numTarget <= 0 || numTarget > 100_000_000)
+      return NextResponse.json({ error: "Montant cible invalide" }, { status: 400 });
+
+    const numCurrent = Number(currentAmount) || 0;
+    if (numCurrent < 0 || numCurrent > numTarget)
+      return NextResponse.json({ error: "Montant actuel invalide" }, { status: 400 });
+
+    const validColors = ["#069494", "#C48A9F", "#D4AF37", "#5B9BD5", "#8B7BB5", "#4CAF82"];
+    const safeColor = validColors.includes(color) ? color : "#069494";
+
     await connectDB();
     const saving = await Saving.create({
       userId: session.user.id,
-      title,
-      targetAmount: Number(targetAmount),
-      currentAmount: Number(currentAmount) || 0,
+      title: title.trim(),
+      targetAmount: numTarget,
+      currentAmount: numCurrent,
       deadline: deadline ? new Date(deadline) : null,
-      color: color || "#069494",
+      color: safeColor,
     });
 
     return NextResponse.json(saving, { status: 201 });
-  } catch (error) {
-    return NextResponse.json({ error: String(error) }, { status: 500 });
+  } catch {
+    return NextResponse.json({ error: "Erreur serveur" }, { status: 500 });
   }
 }
