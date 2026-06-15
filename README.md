@@ -1,4 +1,4 @@
-# 💰 MyKalpé — Coffre-Fort Numérique
+#  MyKalpé - Coffre-Fort Numérique
 
 MyKalpé est une application web de gestion financière personnelle que j'ai construite pour aider à suivre ses dépenses, gérer son épargne et visualiser sa santé financière en temps réel. Le nom vient d'une fusion entre "My" et "Kalpé", un mot qui évoque l'idée de capital et d'économie.
 
